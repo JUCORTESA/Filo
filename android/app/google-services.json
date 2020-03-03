@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "262376667565",
+    "firebase_url": "https://filo-8f552.firebaseio.com",
+    "project_id": "filo-8f552",
+    "storage_bucket": "filo-8f552.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262376667565:android:4ac75727561ab54c5f4924",
+        "android_client_info": {
+          "package_name": "com.example.filo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262376667565-00dnmek6vv0io5mm6noqtq8q46798l8h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDniFvpI4TIE5-tDyHwn_JY85ikXc_9o48"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262376667565-00dnmek6vv0io5mm6noqtq8q46798l8h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:262376667565:android:b5e908810c6fbcef5f4924",
+        "android_client_info": {
+          "package_name": "com.example.filo_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "262376667565-00dnmek6vv0io5mm6noqtq8q46798l8h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDniFvpI4TIE5-tDyHwn_JY85ikXc_9o48"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "262376667565-00dnmek6vv0io5mm6noqtq8q46798l8h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
