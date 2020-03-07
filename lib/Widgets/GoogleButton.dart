@@ -26,9 +26,9 @@ Widget signInButton() {
           Padding(
             padding: const EdgeInsets.only(left: 10),
             child: Text(
-              'Sign in with Google',
+              'Log In with Google',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 18,
                 color: Colors.grey,
               ),
             ),

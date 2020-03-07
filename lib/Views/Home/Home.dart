@@ -4,13 +4,16 @@ import '../../Widgets/CustomButton.dart';
 import '../Login/Login.dart';
 import '../Signup/Signup.dart';
 
+// Pantalla inicial Sign up, Log in, Skip
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
+
     return Scaffold(
       body: Column(
         children: <Widget>[
+          // imagen corrientazo
           Expanded(
             child: Image.asset(
               "pictures/images/corrientazo1.jpg",
@@ -32,6 +35,7 @@ class Home extends StatelessWidget {
                 SizedBox(
                   height: 15.0,
                 ),
+                // Boton Sign Up -> lleva a vista sign up
                 CustomButton(
                   onPressed: () {
                     Navigator.push(context,
@@ -44,6 +48,7 @@ class Home extends StatelessWidget {
                 SizedBox(
                   height: 5.0,
                 ),
+                // Boton Log In -> lleva a vista Log In
                 CustomButton(
                   onPressed: () {
                     Navigator.push(context,
@@ -56,6 +61,7 @@ class Home extends StatelessWidget {
                 SizedBox(
                   height: 20.0,
                 ),
+                // Boton Skip, salta a Welcome (cambiar por ingreso anonimo)
                 CustomButton(
                   onPressed: () {
                     Navigator.push(context,
