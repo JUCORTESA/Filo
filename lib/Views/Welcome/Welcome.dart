@@ -34,7 +34,7 @@ class Welcome extends StatelessWidget {
             },
             child: Padding(
               padding: EdgeInsets.only(right: 10.0),
-              child: Icon(Icons.shopping_cart),
+              child: Icon(Icons.add),
             ),
           )
         ],
@@ -77,9 +77,8 @@ class Welcome extends StatelessWidget {
     return Column(
       children: <Widget>[
         drawerList(active: true,icon: Icons.home,name:"Home",id: "HOME"),
-        drawerList(active: false,icon: Icons.bookmark_border,name:"My Orders",id: "MY_ORDER"),
-        drawerList(active: false,icon: Icons.notifications_none,name:"Notifications",id: "NOTIFICATION"),
-        drawerList(active: false,icon: Icons.settings,name:"Settings",id: "SETTING"),
+        drawerList(active: false,icon: Icons.notifications_none,name:"Offers",id: "OFFER"),
+        drawerList(active: false,icon: Icons.person,name:"Profile",id: "PROFILE"),
         drawerList(active: false,icon: Icons.power_settings_new,name:"Log Out",id: "LOGOUT"),
       ],
     );

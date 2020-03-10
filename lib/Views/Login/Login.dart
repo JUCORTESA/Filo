@@ -1,3 +1,4 @@
+import 'package:filo/Widgets/GoogleButton.dart';
 import 'package:flutter/material.dart';
 import '../../Widgets/PageHeader.dart';
 import '../../Widgets/CustomButton.dart';
@@ -235,19 +236,7 @@ class LoginState extends State<Login> {
             SizedBox(
               height: 20.0,
             ),
-            CustomButton(
-              text: "Connect with facebook",
-              onPressed: () {},
-              color: Colors.indigo,
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            CustomButton(
-              text: "Connect with twitter",
-              color: Colors.blue,
-              onPressed: () {},
-            )
+            signInButton(), //Google
           ],
         ),
       ),

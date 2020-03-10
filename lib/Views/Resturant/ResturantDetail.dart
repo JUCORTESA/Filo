@@ -43,7 +43,7 @@ class ResturantDetailState extends State<ResturantDetail> with SingleTickerProvi
             onTap: (){},
             child: Padding(
               padding: EdgeInsets.only(right: 10.0),
-              child: Icon(Icons.shopping_cart),
+              child: Icon(Icons.add),
             ),
           )
         ],

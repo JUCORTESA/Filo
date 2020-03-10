@@ -1,3 +1,4 @@
+import 'package:filo/Widgets/GoogleButton.dart';
 import 'package:flutter/material.dart';
 import '../../Widgets/PageHeader.dart';
 import '../../Widgets/CustomButton.dart';
@@ -10,6 +11,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import '../Welcome/Welcome.dart';
 import '../../Modal/Authentication.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class Signup extends StatefulWidget {
   createState() => SignupState();
@@ -222,6 +224,7 @@ class SignupState extends State<Signup> {
             SizedBox(
               height: 20.0,
             ),
+
             CustomButton(
               text: "Sign up",
               color: Colors.red,
@@ -236,19 +239,7 @@ class SignupState extends State<Signup> {
                 style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w600),
               ),
             ),
-            CustomButton(
-              text: "Connect with facebook",
-              color: Colors.indigo,
-              onPressed: () {},
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            CustomButton(
-              text: "Connect with twitter",
-              color: Colors.blue,
-              onPressed: () {},
-            ),
+            signInButton(),
           ],
         ),
       ),
