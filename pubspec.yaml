@@ -27,6 +27,11 @@ dependencies:
   firebase_auth: ^0.15.5+2
   google_maps_flutter: 0.5.24+1
   permission: ^0.1.5
+  cloud_firestore: 0.13.4+1
+  google_maps_webservice: ^0.0.16
+  location: ^2.5.0
+  geoflutterfire: 2.1.0
+
 
 dev_dependencies:
   flutter_test:
