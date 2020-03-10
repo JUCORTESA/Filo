@@ -11,74 +11,83 @@ class Home extends StatelessWidget {
     // TODO: implement build
 
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          // imagen corrientazo
-          Expanded(
-            child: Image.asset(
-              "pictures/images/corrientazo1.jpg",
+      body: SafeArea(
+        bottom: false,
+        top: false,
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: new AssetImage(
+                    'pictures/images/logo.png'
+                    ),
               fit: BoxFit.cover,
+              ),
             ),
-          ),
-          SizedBox(
-            height: 20.0,
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  ("Fi-Lo"),
-                  style: TextStyle(fontSize: 50.0),
-                ),
+            child: Container(
+
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  CustomButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Welcome()));
+                    },
+                    text: "Skip",
+                    color: Color(0x44000000),
+                    width: 80.0,
+                  ),
                 SizedBox(
-                  height: 15.0,
+                height: 430.0,
                 ),
-                // Boton Sign Up -> lleva a vista sign up
-                CustomButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Signup()));
-                  },
-                  text: "Sign Up",
-                  color: Colors.red,
-                  width: 250.0,
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                // Boton Log In -> lleva a vista Log In
-                CustomButton(
-                  onPressed: () {
-                    Navigator.push(context,
+
+                Container(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+
+            // Boton Sign Up -> lleva a vista sign up
+                      CustomButton(
+                        onPressed: () {
+                        Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Signup()));
+                        },
+                        text: "Sign Up",
+                        color: Color(0xffff0000),
+                        width: 250.0,
+                        ),
+                      SizedBox(
+                        height: 5.0,
+                      ),
+    // Boton Log In -> lleva a vista Log In
+                      CustomButton(
+                        onPressed: () {
+                        Navigator.push(context,
                         MaterialPageRoute(builder: (context) => Login()));
-                  },
-                  text: "Log In",
-                  color: Colors.black,
-                  width: 250.0,
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-                // Boton Skip, salta a Welcome (cambiar por ingreso anonimo)
-                CustomButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => Welcome()));
-                  },
-                  text: "Skip",
-                  color: Colors.blue,
-                  width: 250.0,
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-              ],
-            ),
-          )
-        ],
-      ),
+                      },
+                        text: "Log In",
+                        color: Colors.black,
+                        width: 250.0,
+                        ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+    // Boton Skip, salta a Welcome (cambiar por ingreso anonimo)
+                      SizedBox(
+                       height: 20.0,
+                      ),
+                  ],
+              ),
+            )
+            ]
+        ),
+      )
+
+      )
+      )
     );
   }
 }
