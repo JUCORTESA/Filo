@@ -15,6 +15,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:location/location.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:rating_dialog/rating_dialog.dart';
 /////
 
 
@@ -56,43 +57,61 @@ class ResturantDetailState extends State<ResturantDetail> with SingleTickerProvi
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-        actions: <Widget>[
-          InkResponse(
-            onTap: (){},
-            child: Padding(
-              padding: EdgeInsets.only(right: 10.0),
-              child: Icon(Icons.add),
-            ),
-          )
-        ],
-      ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            height: MediaQuery.of(context).size.height/3.5,
-            padding: EdgeInsets.symmetric(vertical: 5.0,horizontal: 10.0),
-            child: Hero(
-              tag: widget.index,
-              child: Image.network(widget.image),
+        appBar: AppBar(
+          title: Text(widget.title),
+          actions: <Widget>[
+            InkResponse(
+              onTap: (){},
+              child: Padding(
+                padding: EdgeInsets.only(right: 10.0),
+              ),
             )
-          ),
-          CustomOutlineButton(
+          ],
+        ),
+        body: Column(
+          children: <Widget>[
+            Container(
+                height: MediaQuery.of(context).size.height/3.5,
+                padding: EdgeInsets.symmetric(vertical: 5.0,horizontal: 10.0),
+                child: Hero(
+                  tag: widget.index,
+                  child: Image.network(widget.image),
+                )
+            ),
+            CustomOutlineButton(
               onPressed: (){
-
-              },
+                showDialog(
+                context: context,
+                barrierDismissible: true, // set to false if you want to force a rating
+                builder: (context) {
+                  return RatingDialog(
+                    icon: Image(
+                    image: new AssetImage('pictures/images/logo.png')),
+                    title: "Califica el Restaurante",
+                    description:
+                    "Seleciona la puntuacion que le das al Restaurante",
+                    submitButton: "SUBMIT",
+                    positiveComment: "Una chimba :)",
+                    negativeComment: "Necesito a ublime :(",
+                    accentColor: Colors.red,
+                    onSubmitPressed: (int rating) {
+                    print("onSubmitPressed: rating = $rating");
+                    },
+                  );
+                }
+                );
+                },
               padding: EdgeInsets.symmetric(horizontal: 15.0,vertical: 5.0),
               textStyle: resturantListButton().copyWith(fontSize: 16.0),
               highlightColor: primaryColor,
               borderColor: primaryColor,
-              text: "Ready in 20Min",
+              text: "Agregar Review",
             ),
-          Expanded(
-            child: DetailTabView(tabController: tabController,),
-          )
-        ],
-      )
+            Expanded(
+              child: DetailTabView(tabController: tabController,),
+            )
+          ],
+        )
     );
   }
 }

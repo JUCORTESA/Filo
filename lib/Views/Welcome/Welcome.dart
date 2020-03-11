@@ -4,6 +4,7 @@ import 'package:filo/Views/Resturant/ResturantList.dart';
 import 'package:filo/Views/Home/Home.dart';
 import 'package:filo/Styles/Color.dart';
 
+final _formKey = GlobalKey<FormState>();
 
 class Welcome extends StatelessWidget {
   FirebaseUser user;
@@ -30,12 +31,71 @@ class Welcome extends StatelessWidget {
         backgroundColor: primaryColor,
         actions: <Widget>[
           InkResponse(
-            onTap: (){
-
-            },
+            onTap: (){},
             child: Padding(
-              padding: EdgeInsets.only(right: 10.0),
-              child: Icon(Icons.add),
+                padding: EdgeInsets.only(right: 10.0),
+                child: Column(
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.add),
+                        onPressed: (){
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  content: Form(
+                                    key: _formKey,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: TextField(
+                                            obscureText: true,
+                                            decoration: InputDecoration(
+                                              labelText: 'Nombre Restaurante',
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: TextField(
+                                            obscureText: true,
+                                            decoration: InputDecoration(
+                                              labelText: 'Precio del corrientazo',
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.all(8.0),
+                                          child: TextField(
+                                            obscureText: true,
+                                            decoration: InputDecoration(
+                                              labelText: 'Descripcion del sitio',
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: RaisedButton(
+                                            color: Colors.blue,
+                                            child: Text("Agregar Restaurante"),
+                                            onPressed: () {
+                                              if (_formKey.currentState.validate()) {
+                                                _formKey.currentState.save();
+                                              }
+                                            },
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              });
+                        },
+                      ),
+                    ]
+                )
             ),
           )
         ],

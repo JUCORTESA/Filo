@@ -14,7 +14,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:location/location.dart';
 import 'package:geoflutterfire/geoflutterfire.dart';
-/////
+import 'package:rating_dialog/rating_dialog.dart';
+
 
 
 String image = 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500';
@@ -46,14 +47,14 @@ class ResturantListView extends StatelessWidget{
             return GestureDetector(
               onTap: (){
                 Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ResturantDetail(
-                      index: index,
-                      image: image,
-                      title: documents[index]["name"],
-                      documents: documents[index],
-                    ),
-                    ),
+                  context,
+                  MaterialPageRoute(builder: (context) => ResturantDetail(
+                    index: index,
+                    image: image,
+                    title: documents[index]["name"],
+                    documents: documents[index],
+                  ),
+                  ),
                 );
               },
               child: ResturantListItem(
@@ -99,18 +100,38 @@ class TextSection extends StatelessWidget{
 
                 Text(documents["name"],style: resturantListTitleText(),),
                 Text(documents["address"],style: resturantListSubTitleText()),
-          ],
+              ],
             ),
           ),
         ),
         Container(
           child: CustomOutlineButton(
-          onPressed: (){
-          },
-          textStyle: resturantListButton(),
-          highlightColor: primaryColor,
-          borderColor: primaryColor,
-          text: "Ready in 20Min",
+            onPressed: (){
+              showDialog(
+                  context: context,
+                  barrierDismissible: true, // set to false if you want to force a rating
+                  builder: (context) {
+                    return RatingDialog(
+                      icon: Image(
+                          image: new AssetImage('pictures/images/logo.png')),
+                      title: "Califica el Restaurante",
+                      description:
+                      "Seleciona la puntuacion que le das al Restaurante",
+                      submitButton: "SUBMIT",
+                      positiveComment: "Una chimba :)",
+                      negativeComment: "Necesito a ublime :(",
+                      accentColor: Colors.red,
+                      onSubmitPressed: (int rating) {
+                        print("onSubmitPressed: rating = $rating");
+                      },
+                    );
+                  }
+              );
+            },
+            textStyle: resturantListButton(),
+            highlightColor: primaryColor,
+            borderColor: primaryColor,
+            text: "Agregar Review",
           ),
         ),
       ],
@@ -144,7 +165,7 @@ class ResturantListItem extends StatelessWidget{
                 ),
               )
           ),
-      TextSection(
+          TextSection(
             documents: documents,
           )
         ],
