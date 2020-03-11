@@ -40,7 +40,7 @@ class Home extends StatelessWidget {
                     width: 80.0,
                   ),
                 SizedBox(
-                height: 430.0,
+                height: 370.0,
                 ),
 
                 Container(

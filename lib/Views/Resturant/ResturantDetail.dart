@@ -5,14 +5,34 @@ import 'package:filo/Views/Resturant/MenuView.dart';
 import 'package:filo/Views/Resturant/PlaceDetailsView.dart';
 import 'package:filo/Views/Resturant/PlaceReviewView.dart';
 import 'package:filo/Widgets/CustomOutlineButton.dart';
+/////
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+//import 'package:permission/permission.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:google_maps_webservice/places.dart';
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:location/location.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
+/////
+
 
 class ResturantDetail extends StatefulWidget{
-  int index;
-  String image;
-  String title;
+
+  const ResturantDetail({
+    @required this.documents,
+    @required this.index,
+    @required this.image,
+    @required this.title,
+  });
+
+  final DocumentSnapshot documents;
+  final int index;
+  final String image;
+  final String title;
 
 
-  ResturantDetail({this.index,this.image,this.title});
 
   @override
   State<StatefulWidget> createState() {

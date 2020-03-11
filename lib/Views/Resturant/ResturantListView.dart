@@ -4,11 +4,34 @@ import 'package:filo/Styles/CustomTextStyle.dart';
 import 'package:filo/Views/Resturant/ResturantDetail.dart';
 import 'package:filo/Widgets/CustomOutlineButton.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+/////
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+//import 'package:permission/permission.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:google_maps_webservice/places.dart';
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:location/location.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
+/////
 
 
 String image = 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500';
 
 class ResturantListView extends StatelessWidget{
+
+  const ResturantListView({
+    Key key,
+    @required this.documents,
+    @required this.initialPosition,
+    @required this.mapController,
+  }) : super(key: key);
+
+  final List<DocumentSnapshot> documents;
+  final LatLng initialPosition;
+  final Completer<GoogleMapController> mapController;
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -24,17 +47,27 @@ class ResturantListView extends StatelessWidget{
               onTap: (){
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ResturantDetail(index: index,image: image,title: "Title From",),
+                    MaterialPageRoute(builder: (context) => ResturantDetail(
+                      index: index,
+                      image: image,
+                      title: documents[index]["name"],
+                      documents: documents[index],
+                    ),
                     ),
                 );
               },
-              child: ResturantListItem(width: width,height: height,index: index,),
+              child: ResturantListItem(
+                width: width,
+                height: height,
+                index: index,
+                documents: documents[index],
+              ),
             );
           },
           separatorBuilder: (context,index){
             return Container();
           },
-          itemCount: 10,
+          itemCount: documents.length,
         );
       },
     );
@@ -42,31 +75,18 @@ class ResturantListView extends StatelessWidget{
 }
 
 class TextSection extends StatelessWidget{
+
+  const TextSection({
+    @required this.documents,
+  });
+
+  final DocumentSnapshot documents;
+
+
   @override
   Widget build(BuildContext context) {
 
-    Stream<QuerySnapshot> _restaurants;
-
-    _restaurants = Firestore.instance
-        .collection('restaurant')
-        .orderBy('name')
-        .snapshots();
-
-
-//    StreamBuilder(
-//        stream: Firestore.instance.collection('{your_collection_name}').snapshots(),
-//    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-//    if (!snapshot.hasData) return CircularProgressIndicator();
-//    return ListView.builder(
-//    itemCount: snapshot.data.documents.length,
-//    itemBuilder: (BuildContext context, int index) {
-//    return new Card(
-//    child: new Column(
-//    children: <Widget>[
-//    new Text(snapshot.data.documents[index].title),
-//    new Text(snapshot.data.documents[index].content)
-//    ],
-
+    print(documents["name"]);
     // TODO: implement build
     return Row(
       children: <Widget>[
@@ -77,8 +97,8 @@ class TextSection extends StatelessWidget{
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
 
-                Text("Burger cafe",style: resturantListTitleText(),),
-                Text("Hamburger",style: resturantListSubTitleText()),
+                Text(documents["name"],style: resturantListTitleText(),),
+                Text(documents["address"],style: resturantListSubTitleText()),
           ],
             ),
           ),
@@ -103,7 +123,9 @@ class ResturantListItem extends StatelessWidget{
   double height;
   double width;
   int index;
-  ResturantListItem({this.width,this.height,this.index});
+  final DocumentSnapshot documents;
+
+  ResturantListItem({this.width,this.height,this.index, this.documents});
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +144,9 @@ class ResturantListItem extends StatelessWidget{
                 ),
               )
           ),
-          TextSection()
+      TextSection(
+            documents: documents,
+          )
         ],
       ),
     );

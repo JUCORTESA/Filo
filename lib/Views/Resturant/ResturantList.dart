@@ -4,9 +4,23 @@ import 'package:filo/Styles/CustomTextStyle.dart';
 import 'package:filo/Views/Resturant/ResturantListMapView.dart';
 import 'dart:ui' as ui;
 import 'ResturantListView.dart';
+/////
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+//import 'package:permission/permission.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:google_maps_webservice/places.dart';
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:location/location.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
+/////
 
 
 class ResturantList extends StatefulWidget{
+
+  final LatLng first = LatLng(4.653056, -74.055232);
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -24,12 +38,21 @@ class ResturantListState extends State<ResturantList> with TickerProviderStateMi
   AnimationController animationController;
   Animation offset;
   TabController tabController;
-
+  //////
+  Stream<QuerySnapshot> _restaurants;
+  final Completer<GoogleMapController> _mapController = Completer();
+  Firestore fireStore = Firestore.instance;
+  Geoflutterfire geo = Geoflutterfire();
+  ///////
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _restaurants = Firestore.instance
+        .collection('restaurant')
+        .orderBy('name')
+        .snapshots();
     tabController = TabController(vsync: this,length: 2,initialIndex: 0);
     animationController = AnimationController(vsync: this,duration: Duration(milliseconds: 200));
     animation = Tween<double>(begin: 0.0,end: 250.0)
@@ -53,7 +76,17 @@ class ResturantListState extends State<ResturantList> with TickerProviderStateMi
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      body: Stack(
+      body: StreamBuilder<QuerySnapshot>(
+          stream: _restaurants,
+          builder: (context, snapshot)
+    {
+      if (snapshot.hasError) {
+        return Center(child: Text('Error: ${snapshot.error}'));
+      }
+      if (!snapshot.hasData) {
+        return Center(child: const Text('Loading...'));
+      }
+      return Stack(
         children: <Widget>[
           Column(
             children: <Widget>[
@@ -76,7 +109,11 @@ class ResturantListState extends State<ResturantList> with TickerProviderStateMi
                 child: TabBarView(
                   controller: tabController,
                   children: <Widget>[
-                    ResturantListView(),
+                    ResturantListView(
+                      documents: snapshot.data.documents,
+                      initialPosition: widget.first,
+                      mapController: _mapController,
+                    ),
                     ResturantMapView()
                   ],
                 ),
@@ -84,80 +121,89 @@ class ResturantListState extends State<ResturantList> with TickerProviderStateMi
 
             ],
           ),
-         getBlurWidget(),
-         Positioned(
-            bottom: animation.value,
-            child: Align(
-              alignment: Alignment.center,
-              child: SafeArea(
-                bottom: (animation.value == 0) ? true : false,
-                minimum: EdgeInsets.only(bottom: 10.0),
-                child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 50.0,
-                    child: FittedBox(
-                      child: FloatingActionButton(
-                        onPressed: (){
-                          if(fromBottom == 100){
-                            animationController.reverse();
-                            setState(() {
-                              fromBottom = 0;
-                            });
-                          }else{
-                            setState(() {
-                              fromBottom = 100;
-                            });
-                            animationController.forward();
-                          }
-                        },
-                        child: Icon(Icons.filter_list),
-                      ),
-                    )
+          getBlurWidget(),
+          Positioned(
+              bottom: animation.value,
+              child: Align(
+                alignment: Alignment.center,
+                child: SafeArea(
+                  bottom: (animation.value == 0) ? true : false,
+                  minimum: EdgeInsets.only(bottom: 10.0),
+                  child: Container(
+                      width: MediaQuery
+                          .of(context)
+                          .size
+                          .width,
+                      height: 50.0,
+                      child: FittedBox(
+                        child: FloatingActionButton(
+                          onPressed: () {
+                            if (fromBottom == 100) {
+                              animationController.reverse();
+                              setState(() {
+                                fromBottom = 0;
+                              });
+                            } else {
+                              setState(() {
+                                fromBottom = 100;
+                              });
+                              animationController.forward();
+                            }
+                          },
+                          child: Icon(Icons.filter_list),
+                        ),
+                      )
+                  ),
                 ),
-              ),
-            )
-         ),
+              )
+          ),
           Align(
             alignment: Alignment.bottomCenter,
             child: SlideTransition(
-              position: offset,
-              child: Container(
-                height: 250.0,
-                color: Colors.white,
-                width: double.infinity,
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 10.0),
-                      child: Text("Filters",style: TextStyle(fontSize: 20.0,fontWeight: FontWeight.w600),),
-                    ),
+                position: offset,
+                child: Container(
+                  height: 250.0,
+                  color: Colors.white,
+                  width: double.infinity,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
+                        child: Text("Filters", style: TextStyle(
+                            fontSize: 20.0, fontWeight: FontWeight.w600),),
+                      ),
                       Container(
-                      decoration: BoxDecoration(
-                      border: Border(bottom: BorderSide(color: Colors.grey[200]))),
+                        decoration: BoxDecoration(
+                            border: Border(bottom: BorderSide(color: Colors
+                                .grey[200]))),
                       ),
-                    Expanded(
-                      child: Container(
-                        child: Wrap(
-                          children: <Widget>[
-                            getFilterWidgetIcon(Icons.local_pizza),
-                            getFilterWidgetIcon(Icons.local_pizza),
-                            getFilterWidgetIcon(Icons.local_pizza),
-                            getFilterWidgetIcon(Icons.local_pizza),
-                            getFilterWidgetIcon(Icons.local_pizza),
-                            getFilterWidgetIcon(Icons.local_pizza)
-                          ],
+                      Expanded(
+                        child: Container(
+                          child: Wrap(
+                            children: <Widget>[
+                              getFilterWidgetIcon(Icons.local_pizza),
+                              getFilterWidgetIcon(Icons.local_pizza),
+                              getFilterWidgetIcon(Icons.local_pizza),
+                              getFilterWidgetIcon(Icons.local_pizza),
+                              getFilterWidgetIcon(Icons.local_pizza),
+                              getFilterWidgetIcon(Icons.local_pizza)
+                            ],
+                          ),
                         ),
-                      ),
-                    )
-                  ],
-                ),
-              )
+                      )
+                    ],
+                  ),
+                )
             ),
           )
         ],
-      )
+
+      );
+      },
+      ),
     );
   }
+
   ///
   /// Return Filter section icon UI
   ///
