@@ -2,10 +2,79 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:filo/Widgets/CustomDivider.dart';
 import 'package:filo/Widgets/CustomRatingBar.dart';
+/////
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+//import 'package:permission/permission.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+//import 'package:google_maps_webservice/places.dart';
+import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
+import 'package:location/location.dart';
+import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:rating_dialog/rating_dialog.dart';
+/////
 
-class PlaceReviewView extends StatelessWidget{
+
+
+class PlaceReviewView extends StatefulWidget {
+  PlaceReviewView({this.documents});
+  final DocumentSnapshot documents;
+
+  @override
+  _Review createState()  =>  _Review() ;
+}
+class _Review extends State<PlaceReviewView> {
+  Stream<QuerySnapshot> _reviews;
+  Firestore fireStore = Firestore.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    _reviews = Firestore.instance
+        .collection('restaurant').document(widget.documents.documentID)
+        .collection('reviews')
+        .snapshots();
+  }
+
   @override
   Widget build(BuildContext context) {
+    return  Scaffold(
+        body: StreamBuilder<QuerySnapshot>(
+        stream: _reviews,
+        builder: (context, snapshot)
+    {
+      if (snapshot.hasError) {
+        return Center(child: Text('Error: ${snapshot.error}'));
+      }
+      if (!snapshot.hasData) {
+        return Center(child: const Text('Loading...'));
+      }
+
+      return Stack(
+        children: <Widget>[
+          ReviewF(
+            reviews : snapshot.data.documents,
+            documents: widget.documents,
+          )
+        ],
+
+      );
+    },
+        ),
+    );
+  }
+}
+class ReviewF extends StatelessWidget {
+  ReviewF({this.documents, this.reviews});
+  final DocumentSnapshot documents;
+  final List<DocumentSnapshot> reviews;
+
+  @override
+    Widget build(BuildContext context) {
+    int sumatotal = 0;
+    reviews.forEach((doc) => sumatotal += doc["review"]);
+    double promedio = (sumatotal/reviews.length);
     // TODO: implement build
     return Container(
       child:  Column(
@@ -21,8 +90,8 @@ class PlaceReviewView extends StatelessWidget{
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  Text("25 reviews",style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold),),
-                  CustomRatingBar(size: 2.0,)
+                  Text(reviews.length.toString() + " reviews",style: TextStyle(fontSize: 18.0,fontWeight: FontWeight.bold),),
+                  CustomRatingBar(size: promedio,)
                 ],
               ),
             ),
@@ -32,32 +101,41 @@ class PlaceReviewView extends StatelessWidget{
           ),
           Expanded(
             child: Container(
-              child: PlaceReviewList(),
+              child: PlaceReviewList(reviews: reviews),
             ),
           )
         ],
       ),
     );
   }
+  _reviewsQ(String id) async {
+      Firestore.instance
+          .collection('restaurant').document(id).collection('reviews').snapshots();
+  }
 }
 
 class PlaceReviewList extends StatelessWidget{
+  PlaceReviewList({this.reviews});
+  final List<DocumentSnapshot> reviews;
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return ListView.separated(
         itemBuilder: (context,index){
-          return PlaceReviewListItem();
+          return PlaceReviewListItem(review: reviews[index]);
         },
         separatorBuilder: (context,index){
           return SizedBox(height: 20.0,);
         },
-        itemCount: 10
+        itemCount: reviews.length,
     );
   }
 }
 
 class PlaceReviewListItem extends StatelessWidget{
+  PlaceReviewListItem({this.review});
+  final DocumentSnapshot review;
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -86,16 +164,16 @@ class PlaceReviewListItem extends StatelessWidget{
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("User name",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16.0),),
-                      Text("July 20th,2019",style: TextStyle(fontSize: 13.0),)
+                      Text("Anonymous",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16.0),),
+                      Text("---------",style: TextStyle(fontSize: 13.0),)
                     ],
                   ),
                 )
               ),
-              CustomRatingBar(size: 3,)
+              CustomRatingBar(size: review["review"].toDouble(),)
             ],
           ),
-          Text("Sisas estuvo chimba el almuerzo",
+          Text(_textIf(review["review"]),
             style: TextStyle(fontSize: 13),
             maxLines: 3,
           ),
@@ -103,5 +181,19 @@ class PlaceReviewListItem extends StatelessWidget{
         ],
       ),
     );
+  }
+  _textIf(int number){
+    if (number == 1)
+      return "Necesito a ubime :(";
+    if (number == 2)
+      return "Necesito a ubime :(";
+    if (number == 3)
+      return "Aguanta pal desamure!";
+    if (number == 4)
+      return "Chimbita pero no se puede repetir jugo!";
+    if (number == 5)
+      return "Sisas una chimba recomendado!";
+          
+    
   }
 }

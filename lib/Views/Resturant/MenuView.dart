@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:filo/Styles/Color.dart';
 
 class MenuView extends StatelessWidget {
+  MenuView({this.price});
+  String price;
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -42,7 +45,7 @@ class MenuView extends StatelessWidget {
                                     ),
                                   ),
                                   Text(
-                                    "\$12",
+                                    price,
                                     style: TextStyle(
                                         fontSize: 20.0,
                                         color: primaryColor,
@@ -70,6 +73,6 @@ class MenuView extends StatelessWidget {
             height: 5.0,
           );
         },
-        itemCount: 10);
+        itemCount: 1);
   }
 }

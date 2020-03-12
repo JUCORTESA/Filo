@@ -18,6 +18,7 @@ import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:rating_dialog/rating_dialog.dart';
 /////
 
+Firestore fireStore = Firestore.instance;
 
 class ResturantDetail extends StatefulWidget{
 
@@ -38,13 +39,14 @@ class ResturantDetail extends StatefulWidget{
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return ResturantDetailState();
+    return ResturantDetailState(documents: documents);
   }
 }
 
 class ResturantDetailState extends State<ResturantDetail> with SingleTickerProviderStateMixin{
-
+  ResturantDetailState({this.documents});
   TabController tabController;
+  final DocumentSnapshot documents;
 
   @override
   void initState() {
@@ -59,6 +61,7 @@ class ResturantDetailState extends State<ResturantDetail> with SingleTickerProvi
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
+          backgroundColor: primaryColor,
           actions: <Widget>[
             InkResponse(
               onTap: (){},
@@ -95,6 +98,7 @@ class ResturantDetailState extends State<ResturantDetail> with SingleTickerProvi
                     negativeComment: "Necesito a ublime :(",
                     accentColor: Colors.red,
                     onSubmitPressed: (int rating) {
+                      _addReview(documents, rating);
                     print("onSubmitPressed: rating = $rating");
                     },
                   );
@@ -108,18 +112,27 @@ class ResturantDetailState extends State<ResturantDetail> with SingleTickerProvi
               text: "Agregar Review",
             ),
             Expanded(
-              child: DetailTabView(tabController: tabController,),
+              child: DetailTabView(
+                tabController: tabController,
+              documents: widget.documents,),
             )
           ],
         )
     );
+  }
+
+  _addReview(DocumentSnapshot documents, int rating) async {
+    return fireStore.collection('restaurant').document(documents.documentID).collection('reviews').add({'review':rating});
+
   }
 }
 
 class DetailTabView extends StatelessWidget{
   TabController tabController;
 
-  DetailTabView({this.tabController});
+  DetailTabView({this.tabController, this.documents});
+
+  final DocumentSnapshot documents;
 
   @override
   Widget build(BuildContext context) {
@@ -153,9 +166,9 @@ class DetailTabView extends StatelessWidget{
           child: TabBarView(
             controller: tabController,
             children: <Widget>[
-              MenuView(),
-              PlaceDetailView(),
-              PlaceReviewView()
+              MenuView(price:documents["price"]),
+              PlaceDetailView(documents:documents),
+              PlaceReviewView(documents:documents)
             ],
           ),
         )

@@ -19,6 +19,8 @@ import 'package:rating_dialog/rating_dialog.dart';
 
 
 String image = 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500';
+Firestore fireStore = Firestore.instance;
+Geoflutterfire geo = Geoflutterfire();
 
 class ResturantListView extends StatelessWidget{
 
@@ -87,7 +89,6 @@ class TextSection extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
 
-    print(documents["name"]);
     // TODO: implement build
     return Row(
       children: <Widget>[
@@ -99,7 +100,7 @@ class TextSection extends StatelessWidget{
               children: <Widget>[
 
                 Text(documents["name"],style: resturantListTitleText(),),
-                Text(documents["address"],style: resturantListSubTitleText()),
+                Text(documents["price"],style: resturantListSubTitleText()),
               ],
             ),
           ),
@@ -122,6 +123,7 @@ class TextSection extends StatelessWidget{
                       negativeComment: "Necesito a ublime :(",
                       accentColor: Colors.red,
                       onSubmitPressed: (int rating) {
+                        _addReview(documents, rating);
                         print("onSubmitPressed: rating = $rating");
                       },
                     );
@@ -137,6 +139,10 @@ class TextSection extends StatelessWidget{
       ],
     );
   }
+}
+_addReview(DocumentSnapshot documents, int rating) async {
+return fireStore.collection('restaurant').document(documents.documentID).collection('reviews').add({'review':rating});
+
 }
 
 class ResturantListItem extends StatelessWidget{

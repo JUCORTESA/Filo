@@ -63,32 +63,32 @@ class _ResturantMapView extends State<ResturantMapView> {
                  initialPosition: widget.first,
                  mapController: _mapController,
                ),
-               FlatButton(
-                   child: Icon(Icons.pin_drop),
-                   color: Colors.green,
-                   onPressed: () => _addMarker()
-               ),
+//               FlatButton(
+//                   child: Icon(Icons.pin_drop),
+//                   color: Colors.green,
+//                   onPressed: () => _addMarker()
+//               ),
              ],
            );
          },
        ),
      );
    }
-   _addMarker() async {
-     _locationData = await location.getLocation();
+//   _addMarker() async {
+//     _locationData = await location.getLocation();
+//
+//     GeoFirePoint point = geo.point(latitude: _locationData.latitude, longitude: _locationData.longitude);
+//     return fireStore.collection('restaurant').add({
+//       'location': point.geoPoint,
+//       'name': 'Yay I can be queried!',
+//       'address': 'calle falsa 123',
+//       'numero': 1,
+//     });
 
-     GeoFirePoint point = geo.point(latitude: _locationData.latitude, longitude: _locationData.longitude);
-     return fireStore.collection('restaurant').add({
-       'location': point.geoPoint,
-       'name': 'Yay I can be queried!',
-       'address': 'calle falsa 123',
-       'numero': 1,
-     });
-
-
-   }
 
 }
+
+//}
 
 
 
