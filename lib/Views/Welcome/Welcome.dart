@@ -46,7 +46,7 @@ class Welcome extends StatelessWidget {
       key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0.0,
-        title: Text("Resturant Nearby"),
+        title: Text("Lo más cerca"),
         backgroundColor: primaryColor,
         actions: <Widget>[
           InkResponse(
@@ -107,6 +107,8 @@ class Welcome extends StatelessWidget {
                                                   .validate()) {
                                                 _formKey.currentState.save();
                                                 _addMarker();;
+                                                // cerrar ventana
+                                                Navigator.of(context).pop();
                                               }
                                             },
                                           ),
