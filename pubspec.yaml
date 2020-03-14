@@ -33,6 +33,7 @@ dependencies:
   geoflutterfire: 2.1.0
   google_sign_in: ^4.1.4
   flutter_signin_button: ^1.0.0
+  rating_dialog: ^1.0.0
 
 dev_dependencies:
   flutter_test:

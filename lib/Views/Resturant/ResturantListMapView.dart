@@ -24,9 +24,9 @@ class ResturantMapView extends StatefulWidget {
 
   @override
   _ResturantMapView createState()  =>  _ResturantMapView() ; // creating an instance of map view
- }
+}
 
- class _ResturantMapView extends State<ResturantMapView> {
+class _ResturantMapView extends State<ResturantMapView> {
    Stream<QuerySnapshot> _restaurants;
    final Completer<GoogleMapController> _mapController = Completer();
    Firestore fireStore = Firestore.instance;
@@ -58,43 +58,45 @@ class ResturantMapView extends StatefulWidget {
 
            return Stack(
              children: [
-               StoreMap(
+               ShowMap(
                  documents: snapshot.data.documents,
                  initialPosition: widget.first,
                  mapController: _mapController,
                ),
-               FlatButton(
-                   child: Icon(Icons.pin_drop),
-                   color: Colors.green,
-                   onPressed: () => _addMarker()
-               ),
+//               FlatButton(
+//                   child: Icon(Icons.pin_drop),
+//                   color: Colors.green,
+//                   onPressed: () => _addMarker()
+//               ),
              ],
            );
          },
        ),
      );
    }
-   _addMarker() async {
-     _locationData = await location.getLocation();
+//   _addMarker() async {
+//     _locationData = await location.getLocation();
+//
+//     GeoFirePoint point = geo.point(latitude: _locationData.latitude, longitude: _locationData.longitude);
+//     return fireStore.collection('restaurant').add({
+//       'location': point.geoPoint,
+//       'name': 'Yay I can be queried!',
+//       'address': 'calle falsa 123',
+//       'numero': 1,
+//     });
 
-     GeoFirePoint point = geo.point(latitude: _locationData.latitude, longitude: _locationData.longitude);
-     return fireStore.collection('restaurant').add({
-       'location': point.geoPoint,
-       'name': 'Yay I can be queried!',
-       'address': 'calle falsa 123',
-       'numero': 1,
-     });
-
-
-   }
 
 }
 
-class StoreMap extends StatelessWidget {
+//}
 
 
 
-  const StoreMap({
+
+class ShowMap extends StatelessWidget {
+
+
+  const ShowMap({
     Key key,
     @required this.documents,
     @required this.initialPosition,
@@ -104,8 +106,6 @@ class StoreMap extends StatelessWidget {
   final List<DocumentSnapshot> documents;
   final LatLng initialPosition;
   final Completer<GoogleMapController> mapController;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +138,7 @@ class StoreMap extends StatelessWidget {
       },
     );
   }
+
 }
 
 

@@ -18,7 +18,7 @@ class Home extends StatelessWidget {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: new AssetImage(
-                    'pictures/images/logo.png'
+                    'pictures/images/logo.gif'
                     ),
               fit: BoxFit.cover,
               ),
@@ -40,7 +40,7 @@ class Home extends StatelessWidget {
                     width: 80.0,
                   ),
                 SizedBox(
-                height: 430.0,
+                height: 420.0,
                 ),
 
                 Container(
