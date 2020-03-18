@@ -18,7 +18,7 @@ class Home extends StatelessWidget {
           decoration: BoxDecoration(
             image: DecorationImage(
               image: new AssetImage(
-                    'pictures/images/logo.gif'
+                    'pictures/images/logo1.gif'
                     ),
               fit: BoxFit.cover,
               ),
@@ -30,17 +30,20 @@ class Home extends StatelessWidget {
                   SizedBox(
                     height: 30.0,
                   ),
-                  CustomButton(
-                    onPressed: () {
+                  /**
+                   * CustomButton(
+                      onPressed: () {
                       Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => Welcome()));
-                    },
-                    text: "Skip",
-                    color: Color(0x44000000),
-                    width: 80.0,
-                  ),
+                      MaterialPageRoute(builder: (context) => Welcome()));
+                      },
+                      text: "Skip",
+                      color: Color(0x44000000),
+                      width: 80.0,
+                      ),
+                   */
+
                 SizedBox(
-                height: 420.0,
+                height: 520.0,
                 ),
 
                 Container(
