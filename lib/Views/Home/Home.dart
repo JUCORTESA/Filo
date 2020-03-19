@@ -43,7 +43,7 @@ class Home extends StatelessWidget {
                    */
 
                 SizedBox(
-                height: 520.0,
+                height: 480.0,
                 ),
 
                 Container(
