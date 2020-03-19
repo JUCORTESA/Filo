@@ -39,7 +39,7 @@ class MenuView extends StatelessWidget {
                                 children: <Widget>[
                                   Expanded(
                                     child: Text(
-                                      "Corrientazo",
+                                      "Home-cooked food",
                                       style: TextStyle(
                                           fontSize: 16.0, fontWeight: FontWeight.w500),
                                     ),
@@ -54,7 +54,7 @@ class MenuView extends StatelessWidget {
                                 ],
                               ),
                               Text(
-                                "Deliciosa comida casera",
+                                "Delicious home-cooked food",
                                 maxLines: 2,
                                 style: TextStyle(fontSize: 13),
                               )

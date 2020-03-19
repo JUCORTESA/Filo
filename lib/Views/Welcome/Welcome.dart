@@ -29,7 +29,7 @@ class Welcome extends StatelessWidget {
   FirebaseUser user;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  Welcome({this.user});
+    Welcome({this.user});
 
   logout(BuildContext context) async {
     try {
@@ -46,7 +46,7 @@ class Welcome extends StatelessWidget {
       key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0.0,
-        title: Text("Lo más cerca"),
+        title: Text("The closest"),
         backgroundColor: primaryColor,
         actions: <Widget>[
           InkResponse(
@@ -73,7 +73,7 @@ class Welcome extends StatelessWidget {
                                             controller: myName,
                                             obscureText: false,
                                             decoration: InputDecoration(
-                                              labelText: 'Nombre Restaurante',
+                                              labelText: 'Restaurant name',
                                             ),
                                           ),
                                         ),
@@ -83,7 +83,7 @@ class Welcome extends StatelessWidget {
                                             controller: myPrice,
                                             obscureText: false,
                                             decoration: InputDecoration(
-                                              labelText: 'Precio del corrientazo',
+                                              labelText: 'Price',
                                             ),
                                           ),
                                         ),
@@ -93,7 +93,7 @@ class Welcome extends StatelessWidget {
                                             controller: myDescription,
                                             obscureText: false,
                                             decoration: InputDecoration(
-                                              labelText: 'Descripcion del sitio',
+                                              labelText: 'Site description',
                                             ),
                                           ),
                                         ),
@@ -101,13 +101,13 @@ class Welcome extends StatelessWidget {
                                           padding: const EdgeInsets.all(8.0),
                                           child: RaisedButton(
                                             color: Colors.blue,
-                                            child: Text("Agregar Restaurante"),
+                                            child: Text("Add Restaurant"),
                                             onPressed: () {
                                               if (_formKey.currentState
                                                   .validate()) {
                                                 _formKey.currentState.save();
                                                 _addMarker();;
-                                                // cerrar ventana
+                                                // Close window
                                                 Navigator.of(context).pop();
                                               }
                                             },

@@ -115,12 +115,12 @@ class TextSection extends StatelessWidget{
                     return RatingDialog(
                       icon: Image(
                           image: new AssetImage('pictures/images/logo.png')),
-                      title: "Califica el Restaurante",
+                      title: "Rate the Restaurant",
                       description:
-                      "Seleciona la puntuacion que le das al Restaurante",
+                      "Select the rating you give to the Restaurant",
                       submitButton: "SUBMIT",
-                      positiveComment: "Una chimba :)",
-                      negativeComment: "Necesito a ublime :(",
+                      positiveComment: "Excellent",
+                      negativeComment: "I need a bath :(",
                       accentColor: Colors.red,
                       onSubmitPressed: (int rating) {
                         _addReview(documents, rating);
@@ -133,7 +133,7 @@ class TextSection extends StatelessWidget{
             textStyle: resturantListButton(),
             highlightColor: primaryColor,
             borderColor: primaryColor,
-            text: "Agregar Review",
+            text: "Add Review",
           ),
         ),
       ],

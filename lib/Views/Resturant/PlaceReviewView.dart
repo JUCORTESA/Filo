@@ -184,15 +184,15 @@ class PlaceReviewListItem extends StatelessWidget{
   }
   _textIf(int number){
     if (number == 1)
-      return "Necesito a ubime :(";
+      return "I need a bath";
     if (number == 2)
-      return "Necesito a ubime :(";
+      return "I need a bath";
     if (number == 3)
-      return "Aguanta pal desamure!";
+      return "Acceptable ";
     if (number == 4)
-      return "Chimbita pero no se puede repetir jugo!";
+      return "Fine, but you can't repeat juice!";
     if (number == 5)
-      return "Sisas una chimba recomendado!";
+      return "Super recommended";
           
     
   }
