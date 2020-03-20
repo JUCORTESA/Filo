@@ -25,7 +25,7 @@ class MenuView extends StatelessWidget {
                       height: 70.0,
                       width: 80.0,
                       padding: EdgeInsets.only(left: 10.0),
-                      child: Image.network("https://media.graytvinc.com/images/810*455/FAST+FOOD+MGN.jpg",fit: BoxFit.fitHeight,),
+                      child: Image.network("https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSK5GpP8HQQ97SDtLtYI6eHyb8tcSY-kYV0ersNrswQaPzyaXIL",fit: BoxFit.fitHeight,),
                     ),
                     Expanded(
                         child: Container(

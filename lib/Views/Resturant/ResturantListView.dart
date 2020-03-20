@@ -18,7 +18,7 @@ import 'package:rating_dialog/rating_dialog.dart';
 
 
 
-String image = 'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500';
+String image = 'https://images.unsplash.com/photo-1428515613728-6b4607e44363?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60';
 Firestore fireStore = Firestore.instance;
 Geoflutterfire geo = Geoflutterfire();
 
